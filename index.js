@@ -1,7 +1,12 @@
 const Joi = require('joi');
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 const customers = require('./DB/customers');
+
+mongoose.connect('mongodb://localhost/menu')
+    .then(() => console.log('CONNECTED TO MONGODB'))
+    .catch(err => console.error('could not connect...', err));
 
 app.use(express.json());
 
