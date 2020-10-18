@@ -2,14 +2,16 @@ const Joi = require('joi');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const customers = require('./DB/menu');
+const customersRoute = require('./customersRoute')
 const menu = require('./DB/menu');
+
 
 mongoose.connect('mongodb://localhost/menu')
     .then(() => console.log('CONNECTED TO MONGODB'))
     .catch(err => console.error('could not connect...', err));
 
 app.use(express.json());
+app.use('/customersRoute', customersRoute);
 
 // to display the menu
 app.get('/api/menu', (req, res) => {
@@ -35,9 +37,9 @@ app.post('/api/menuItem', (req, res) => {
         name: req.body.name,
         price: req.body.price
     };
-    //insert the new  to the customers array
+    //insert the new item to the menu array
     menu.push(menuItem)
-    //return the newly added customer
+    //return the newly added item
     res.send(menuItem);
 });
 
